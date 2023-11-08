@@ -12,12 +12,13 @@ export function addWidgets(newWidget: NewWidget): Promise<Widget[]> {
 }
 
 export function editWidget(id: number, newWidget: NewWidget) {
-  return db('Widgets').where('id', id).update(newWidget)
+  return db('Widgets').where('id', id).update(newWidget).returning('*')
 }
 
 export function deleteWidget(id: number) {
   return db('Widgets')
     .where('id', id)
     .del()
+    .returning('*')
 
 }

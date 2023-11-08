@@ -7,17 +7,18 @@ interface Props {
   widget: NewWidget
   widgetId: number
   setWidgets: React.Dispatch<React.SetStateAction<Widget[]>>
-  fetchWidgets: Promise<Widget[]>
+  fetchWidgets: ()=>void,
+  setEditId:React.Dispatch<React.SetStateAction<number | null>>
 }
 
 const emptyForm = {
   name: '',
-  price: null,
+  price: 0,
   mfg: '',
-  inStock: null,
+  inStock: 0,
 }
 
-const EidtForm = ({ widget, widgetId, fetchWidgets }: Props) => {
+const EidtForm = ({ widget, widgetId, fetchWidgets, setEditId }: Props) => {
   const [form, setForm] = useState<NewWidget>(widget)
 
   function hanldeChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,9 +28,12 @@ const EidtForm = ({ widget, widgetId, fetchWidgets }: Props) => {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     try {
-      await editWidget(widgetId, form)
-      //setWidgets(widgets)
+      event.preventDefault()
+     await editWidget(widgetId, form)
+     
       fetchWidgets()
+      setForm(emptyForm)
+      setEditId(null)
     } catch (err) {
       console.error(err)
     }

@@ -31,19 +31,20 @@ router.patch('/:id', async (req, res) => {
     const { name, price, mfg, inStock } = req.body
     const newWidget = { name, price, mfg, inStock }
     const updatedWidget = await editWidget(id, newWidget)
+
     res.json(updatedWidget)
   } catch (err) {
     console.error(err)
   }
 })
 
-router.delete('/:id', async(req,res)=>{
-  try{
+router.delete('/:id', async (req, res) => {
+  try {
     const id = Number(req.params.id)
     const widgets = await deleteWidget(id)
-   
+
     res.json(widgets)
-  }catch (err) {
+  } catch (err) {
     console.error(err)
   }
 })

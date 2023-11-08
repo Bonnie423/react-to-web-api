@@ -1,14 +1,14 @@
 export interface NewWidget {
   name: string
-  price: number | null
+  price: number 
   mfg: string
-  inStock: number | null
+  inStock: number 
 }
 
 export interface Widget {
   id: number
   name: string
-  price: number |null
+  price: number 
   mfg: string
-  inStock: number | null
+  inStock: number 
 }

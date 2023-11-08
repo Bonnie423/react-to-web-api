@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { NewWidget, Widget } from '../../models/Widget'
-import { addWidget } from '../apiClient'
+import { addWidget, getWidgets } from '../apiClient'
 
 interface Props {
   setWidgets: React.Dispatch<React.SetStateAction<Widget[]>>
   widgets: Widget[]
-  fetchWidgets: Promise<Widget[]>
+  fetchWidgets: () => void
+  setFormShow:React.Dispatch<React.SetStateAction<boolean>>
+  formShow:boolean
 }
 
 const emptyForm = {
@@ -15,7 +17,7 @@ const emptyForm = {
   inStock: 0,
 }
 
-const AddWidget = ({ fetchWidgets }: Props) => {
+const AddWidget = ({ setWidgets, widgets, fetchWidgets, setFormShow,formShow }: Props) => {
   const [form, setForm] = useState<NewWidget>(emptyForm)
 
   function hanldeChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -26,10 +28,11 @@ const AddWidget = ({ fetchWidgets }: Props) => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const newWidget = await addWidget(form)
-    fetchWidgets()
 
-    // setWidgets([...widgets, newWidget])
-    // setForm(emptyForm)
+    setWidgets([...widgets, newWidget])
+    setForm(emptyForm)
+    fetchWidgets()
+    setFormShow(!formShow)
   }
 
   return (

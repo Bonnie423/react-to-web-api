@@ -37,7 +37,7 @@ function App() {
     try {
       await deleteWidget(widgetId)
       //setWidgets(widgets)
-      fetchWidgets()
+       fetchWidgets()
     } catch (err) {
       console.error(err)
     }
@@ -61,6 +61,7 @@ function App() {
                     widgetId={widget.id}
                     setWidgets={setWidgets}
                     fetchWidgets={fetchWidgets}
+                    setEditId={setEditWidgetId}
                   />
                 )}
                 <button onClick={() => handleEditWidgetId(widget.id)}>
@@ -77,7 +78,7 @@ function App() {
         )}
       </ul>
       <button onClick={() => setFormShow(!formShow)}>Add Widget</button>
-      {formShow && <AddWidget setWidgets={setWidgets} widgets={widgets} fetchWidgets={fetchWidgets} />}
+      {formShow && <AddWidget setWidgets={setWidgets} widgets={widgets} fetchWidgets={fetchWidgets} setFormShow={setFormShow} formShow={formShow}/>}
     </div>
   )
 }
